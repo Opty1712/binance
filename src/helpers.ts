@@ -1,15 +1,18 @@
 import { Data } from './data';
 
-export const getCompanyFilters = (data: Data[]) => {
+type Filter = {
+  text: string;
+  value: string;
+};
+
+export const getCompanyFilters = (data: Data[]): Filter[] => {
   return data.map(({ company }) => ({
     text: company,
     value: company
   }));
 };
 
-type Filter = ReturnType<typeof getCompanyFilters>[number];
-
-export const getCountryFilters = (data: Data[]) => {
+export const getCountryFilters = (data: Data[]): Filter[] => {
   const { countryFilters } = data.reduce<{
     existingCountries: Record<string, 1>;
     countryFilters: Filter[];

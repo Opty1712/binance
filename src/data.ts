@@ -11,7 +11,7 @@ export const data: Data[] = [
   },
   {
     id: 'a321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2021-02-26',
+    dt: '2021-07-26',
     week: 1,
     country: 'SG',
     company: 'MyCoin',
@@ -21,7 +21,7 @@ export const data: Data[] = [
   },
   {
     id: '0321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2022-01-26',
+    dt: '2022-01-05',
     week: 13,
     country: 'UK',
     company: 'OverTheHills',
@@ -41,7 +41,7 @@ export const data: Data[] = [
   },
   {
     id: '2321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2019-02-06',
+    dt: '2019-11-06',
     week: 32,
     country: 'US',
     company: 'BetterFuture',
