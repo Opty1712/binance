@@ -12,17 +12,30 @@ type Source = Data & {
   key: string;
 };
 
-const countries = new Set(data.map(({ country }) => country));
-
-const countryFilters = Array.from(countries).map((item) => ({
-  text: item,
-  value: item
-}));
-
 const companyFilters = data.map(({ company }) => ({
   text: company,
   value: company
 }));
+
+type Filter = typeof companyFilters[number];
+
+const { countryFilters } = data.reduce<{
+  existingCountries: Record<string, 1>;
+  countryFilters: Filter[];
+}>(
+  (accumulator, { country }) => {
+    if (!accumulator.existingCountries[country]) {
+      accumulator.existingCountries[country] = 1;
+      accumulator.countryFilters.push({
+        text: country,
+        value: country
+      });
+    }
+
+    return accumulator;
+  },
+  { existingCountries: {}, countryFilters: [] }
+);
 
 const columns: TableColumnProps<Data>[] = [
   {
