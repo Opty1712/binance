@@ -57,34 +57,39 @@ const columns: TableColumnProps<Data>[] = [
     dataIndex: 'week',
     key: 'week',
     sorter: (a, b) => a.week - b.week,
-    render: numberRender
+    render: numberRender,
+    align: 'right'
   },
   {
     title: 'Date',
     dataIndex: 'dt',
     key: 'dt',
     sorter: (a, b) => a.dt.length - b.dt.length,
-    render: dateRender
+    render: dateRender,
+    align: 'right'
   },
   {
     title: 'Visits',
     dataIndex: 'web_visits',
     key: 'web_visits',
     sorter: (a, b) => a.web_visits - b.web_visits,
-    render: numberRender
+    render: numberRender,
+    align: 'right'
   },
   {
     title: 'Trading Volume',
     dataIndex: 'trading_volume',
     key: 'trading_volume',
     sorter: (a, b) => a.trading_volume - b.trading_volume,
-    render: numberRender
+    render: numberRender,
+    align: 'right'
   },
   {
     title: 'Coin Price',
     dataIndex: 'coin_price',
     key: 'coin_price',
     sorter: (a, b) => a.coin_price - b.coin_price,
-    render: numberRender
+    render: numberRender,
+    align: 'right'
   }
 ];
