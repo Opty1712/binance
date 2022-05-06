@@ -17,7 +17,7 @@ const columns: TableColumnProps<Data>[] = [
     title: 'Company',
     dataIndex: 'company',
     key: 'company',
-    sorter: (a, b) => a.company.length - b.company.length,
+    sorter: (a, b) => a.company.localeCompare(b.company),
     filters: getCompanyFilters(data),
     onFilter: (value, record) => record.company.startsWith(String(value)),
     filterSearch: (input, record) =>
@@ -29,7 +29,7 @@ const columns: TableColumnProps<Data>[] = [
     title: 'Country',
     dataIndex: 'country',
     key: 'country',
-    sorter: (a, b) => a.country.length - b.country.length,
+    sorter: (a, b) => a.country.localeCompare(b.country),
     filters: getCountryFilters(data),
     onFilter: (value, record) => record.country.indexOf(String(value)) === 0
   },
