@@ -1,7 +1,3 @@
-import { memo } from 'react';
-import { Container } from '../src/containers';
+import { App } from '../src/App';
 
-const Page = memo(() => <Container />);
-Page.displayName = nameof(Page);
-
-export default Page;
+export default App;

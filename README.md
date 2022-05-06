@@ -1,1 +1,3 @@
-# This is a starter kit for applications on NextJS with React / Typescript / Jest
+# Binance technical task.
+
+As it is Proof of Concept I made a fork from my own react-starter-kit
