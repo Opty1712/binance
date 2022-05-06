@@ -12,26 +12,44 @@ type Source = Data & {
   key: string;
 };
 
-const dataSource: Source[] = data.map((item) => ({ ...item, key: item.id }));
+const countries = new Set(data.map(({ country }) => country));
+
+const countryFilters = Array.from(countries).map((item) => ({
+  text: item,
+  value: item
+}));
+
+const companyFilters = data.map(({ company }) => ({
+  text: company,
+  value: company
+}));
 
 const columns: TableColumnProps<Data>[] = [
   {
-    title: 'Week',
-    dataIndex: 'week',
-    key: 'week',
-    sorter: (a, b) => a.week - b.week
+    title: 'Company',
+    dataIndex: 'company',
+    key: 'company',
+    sorter: (a, b) => a.company.length - b.company.length,
+    filters: companyFilters,
+    onFilter: (value, record) => record.company.startsWith(String(value)),
+    filterSearch: (input, record) =>
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore Not valid built-in type fo `value` in AntD
+      record.value.toLowerCase().indexOf(input.toLowerCase()) > -1
   },
   {
     title: 'Country',
     dataIndex: 'country',
     key: 'country',
-    sorter: (a, b) => a.country.length - b.country.length
+    sorter: (a, b) => a.country.length - b.country.length,
+    filters: countryFilters,
+    onFilter: (value, record) => record.country.indexOf(String(value)) === 0
   },
   {
-    title: 'Company',
-    dataIndex: 'company',
-    key: 'company',
-    sorter: (a, b) => a.company.length - b.company.length
+    title: 'Week',
+    dataIndex: 'week',
+    key: 'week',
+    sorter: (a, b) => a.week - b.week
   },
   {
     title: 'Date',
@@ -58,3 +76,5 @@ const columns: TableColumnProps<Data>[] = [
     sorter: (a, b) => a.coin_price - b.coin_price
   }
 ];
+
+const dataSource: Source[] = data.map((item) => ({ ...item, key: item.id }));
