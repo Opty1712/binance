@@ -15,7 +15,7 @@ export const data: Data[] = [
     week: 1,
     country: 'SG',
     company: 'MyCoin',
-    web_visits: 4832,
+    web_visits: 12,
     trading_volume: 6423456763423,
     coin_price: 0.5
   },
@@ -25,7 +25,7 @@ export const data: Data[] = [
     week: 13,
     country: 'UK',
     company: 'OverTheHills',
-    web_visits: 4832,
+    web_visits: 6333,
     trading_volume: 345,
     coin_price: 34
   },
@@ -35,7 +35,7 @@ export const data: Data[] = [
     week: 5,
     country: 'US',
     company: 'InTheDark',
-    web_visits: 4832,
+    web_visits: 673577,
     trading_volume: 633234,
     coin_price: 9877
   },
@@ -45,7 +45,7 @@ export const data: Data[] = [
     week: 32,
     country: 'US',
     company: 'BetterFuture',
-    web_visits: 4832,
+    web_visits: 346767,
     trading_volume: 7654345,
     coin_price: 12
   }
