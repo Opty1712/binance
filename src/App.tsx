@@ -1,13 +1,33 @@
-import { memo } from 'react';
-import { Table, TableColumnProps } from 'antd';
+import { memo, useMemo, useState } from 'react';
+import { Table, TableColumnProps, TableProps } from 'antd';
 import { data, Data } from './data';
 import 'antd/dist/antd.css';
 import { getCompanyFilters, getCountryFilters, getDataSource } from './helpers';
 
 export const App = memo(() => {
+  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+
+  const rowSelection: TableProps<Data>['rowSelection'] = useMemo(
+    () => ({
+      onChange: (selectedRowKeys: React.Key[]) => {
+        setSelectedCompanies(selectedRowKeys.map((item) => String(item)));
+      },
+      type: 'checkbox'
+    }),
+    []
+  );
+
+  const dataSource = useMemo(() => getDataSource(data), []);
+
   return (
     <>
-      <Table dataSource={getDataSource(data)} columns={columns} />
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        rowSelection={rowSelection}
+      />
+      <br />
+      <br />
     </>
   );
 });
