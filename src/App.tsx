@@ -64,7 +64,7 @@ const columns: TableColumnProps<Data>[] = [
     title: 'Date',
     dataIndex: 'dt',
     key: 'dt',
-    sorter: (a, b) => a.dt.length - b.dt.length,
+    sorter: (a, b) => Date.parse(a.dt) - Date.parse(b.dt),
     render: dateRender,
     align: 'right'
   },
