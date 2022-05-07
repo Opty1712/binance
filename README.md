@@ -8,7 +8,7 @@ Not enough time to clarify these statements, so I developed app keeping that in 
 ## Run project:
 1. Install all dependencies with `yarn`
 2. Run `yarn dev` for development or `yarn build && yarn start` for production build
-3. Navigate your browser to (app)[http://localhost:3000/]
+3. Navigate your browser to [app](http://localhost:3000/)
 
 
 ## Unit tests:
