@@ -9,6 +9,8 @@ import {
   Legend,
   ResponsiveContainer
 } from 'recharts';
+import { Typography } from 'antd';
+import { styled } from 'linaria/react';
 import { chartNames } from '../constants';
 import { getCompanyNames, getCompanyColors } from '../helpers';
 import { ChartItem, ChartKey } from '../types';
@@ -19,8 +21,10 @@ export const Chart = memo<ChartProps>(({ chartKey, data }) => {
   const colors = getCompanyColors();
 
   return (
-    <div style={{ height: '300px' }}>
-      <b>{chartNames[chartKey]}</b>
+    <Wrapper>
+      <b>
+        <Typography.Text type="success">{chartNames[chartKey]}</Typography.Text>
+      </b>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}
@@ -48,7 +52,12 @@ export const Chart = memo<ChartProps>(({ chartKey, data }) => {
           ))}
         </LineChart>
       </ResponsiveContainer>
-    </div>
+    </Wrapper>
   );
 });
 Chart.displayName = nameof(Chart);
+
+const Wrapper = styled.div`
+  height: 300px;
+  margin: 40px 0 0 0;
+`;

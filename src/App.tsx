@@ -49,7 +49,7 @@ export const App = memo(() => {
   return (
     <>
       <PageHeader title="Companies comparision" />
-      <Typography.Text type="secondary">
+      <Typography.Text type="warning">
         Sort or filter companies from the table below and select particular
         companies by pressing «checkbox» at the left of the row.
       </Typography.Text>
