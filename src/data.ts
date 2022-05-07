@@ -10,9 +10,30 @@ export const data: Data[] = [
     coin_price: 718
   },
   {
+    id: 'b321c425-c2c9-489b-9596-736bccc55e8e',
+    dt: '2022-02-19',
+    week: 8,
+    country: 'SG',
+    company: 'ToTheMoon',
+    web_visits: 4567,
+    trading_volume: 57878783,
+    coin_price: 704
+  },
+  {
+    id: 'b321c425-c2c9-489b-9596-736bccc55e8e',
+    dt: '2022-02-12',
+    week: 7,
+    country: 'SG',
+    company: 'ToTheMoon',
+    web_visits: 5323,
+    trading_volume: 7433456,
+    coin_price: 755
+  },
+
+  {
     id: 'a321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2021-07-26',
-    week: 1,
+    dt: '2022-02-26',
+    week: 9,
     country: 'SG',
     company: 'MyCoin',
     web_visits: 12,
@@ -20,9 +41,20 @@ export const data: Data[] = [
     coin_price: 0.5
   },
   {
+    id: 'a321c425-c2c9-489b-9596-736bccc55e8e',
+    dt: '2022-02-19',
+    week: 8,
+    country: 'SG',
+    company: 'MyCoin',
+    web_visits: 8,
+    trading_volume: 63433356664,
+    coin_price: 0.8
+  },
+
+  {
     id: '0321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2022-01-05',
-    week: 13,
+    dt: '2022-02-26',
+    week: 9,
     country: 'UK',
     company: 'OverTheHills',
     web_visits: 6333,
@@ -31,8 +63,8 @@ export const data: Data[] = [
   },
   {
     id: '1321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2021-02-05',
-    week: 5,
+    dt: '2022-02-26',
+    week: 9,
     country: 'US',
     company: 'InTheDark',
     web_visits: 673577,
@@ -41,8 +73,8 @@ export const data: Data[] = [
   },
   {
     id: '2321c425-c2c9-489b-9596-736bccc55e8e',
-    dt: '2019-11-06',
-    week: 32,
+    dt: '2022-02-26',
+    week: 9,
     country: 'US',
     company: 'BetterFuture',
     web_visits: 346767,

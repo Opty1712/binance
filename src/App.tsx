@@ -3,29 +3,37 @@ import { Table, TableColumnProps } from 'antd';
 import { data, Data } from './data';
 import 'antd/dist/antd.css';
 import { getCompanyFilters, getCountryFilters, getDataSource } from './helpers';
-import { styled } from 'linaria/react';
 
 export const App = memo(() => {
-  return <Table dataSource={getDataSource(data)} columns={columns} />;
+  return (
+    <>
+      <Table dataSource={getDataSource(data)} columns={columns} />
+    </>
+  );
 });
 App.displayName = nameof(App);
 
-const DivRight = styled.div`
-  text-align: right;
-`;
-
-const dateRender = (date: string) => (
-  <DivRight>
+const renderDate = (date: string) => (
+  <>
     {new Intl.DateTimeFormat('en-US', {
       day: '2-digit',
       month: 'long',
       year: '2-digit'
     }).format(Date.parse(date))}
-  </DivRight>
+  </>
 );
 
-const numberRender = (digits: number) => (
-  <DivRight>{new Intl.NumberFormat('en-US').format(digits)}</DivRight>
+const renderNumber = (digits: number) => (
+  <>{new Intl.NumberFormat('en-US').format(digits)}</>
+);
+
+const renderFinance = (digits: number) => (
+  <>
+    {new Intl.NumberFormat('en-US', {
+      currency: 'USD',
+      style: 'currency'
+    }).format(digits)}
+  </>
 );
 
 /**
@@ -53,19 +61,11 @@ const columns: TableColumnProps<Data>[] = [
     onFilter: (value, record) => record.country.indexOf(String(value)) === 0
   },
   {
-    title: 'Week',
-    dataIndex: 'week',
-    key: 'week',
-    sorter: (a, b) => a.week - b.week,
-    render: numberRender,
-    align: 'right'
-  },
-  {
-    title: 'Date',
+    title: 'Date of Last Data',
     dataIndex: 'dt',
     key: 'dt',
     sorter: (a, b) => Date.parse(a.dt) - Date.parse(b.dt),
-    render: dateRender,
+    render: renderDate,
     align: 'right'
   },
   {
@@ -73,7 +73,7 @@ const columns: TableColumnProps<Data>[] = [
     dataIndex: 'web_visits',
     key: 'web_visits',
     sorter: (a, b) => a.web_visits - b.web_visits,
-    render: numberRender,
+    render: renderNumber,
     align: 'right'
   },
   {
@@ -81,7 +81,7 @@ const columns: TableColumnProps<Data>[] = [
     dataIndex: 'trading_volume',
     key: 'trading_volume',
     sorter: (a, b) => a.trading_volume - b.trading_volume,
-    render: numberRender,
+    render: renderFinance,
     align: 'right'
   },
   {
@@ -89,7 +89,7 @@ const columns: TableColumnProps<Data>[] = [
     dataIndex: 'coin_price',
     key: 'coin_price',
     sorter: (a, b) => a.coin_price - b.coin_price,
-    render: numberRender,
+    render: renderFinance,
     align: 'right'
   }
 ];

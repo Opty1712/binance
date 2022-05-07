@@ -34,5 +34,28 @@ export const getCountryFilters = (data: Data[]): Filter[] => {
   return countryFilters;
 };
 
-export const getDataSource = (data: Data[]) =>
-  data.map((item) => ({ ...item, key: item.id }));
+export const getDataSource = (data: Data[]) => {
+  const filteredDataByLastDate = data.reduce<Record<string, Data>>(
+    (accumulator, current) => {
+      if (!accumulator[current.id]) {
+        accumulator[current.id] = current;
+      } else {
+        const isCurrentLater = Boolean(
+          Date.parse(accumulator[current.id].dt) > Date.parse(current.dt)
+        );
+
+        if (isCurrentLater) {
+          accumulator[current.id] = current;
+        }
+      }
+
+      return accumulator;
+    },
+    {}
+  );
+
+  return Object.keys(filteredDataByLastDate).map((item) => ({
+    ...filteredDataByLastDate[item],
+    key: filteredDataByLastDate[item].id
+  }));
+};
