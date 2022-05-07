@@ -1,3 +1,5 @@
+import { Data } from './types';
+
 export const data: Data[] = [
   {
     id: 'b321c425-c2c9-489b-9596-736bccc55e8e',
@@ -37,7 +39,7 @@ export const data: Data[] = [
     country: 'SG',
     company: 'MyCoin',
     web_visits: 12,
-    trading_volume: 6423456763423,
+    trading_volume: 64263423,
     coin_price: 0.5
   },
   {
@@ -47,7 +49,7 @@ export const data: Data[] = [
     country: 'SG',
     company: 'MyCoin',
     web_visits: 8,
-    trading_volume: 63433356664,
+    trading_volume: 656664,
     coin_price: 0.8
   },
 
@@ -82,14 +84,3 @@ export const data: Data[] = [
     coin_price: 12
   }
 ];
-
-export type Data = {
-  id: string;
-  dt: string;
-  week: number;
-  country: string;
-  company: string;
-  web_visits: number;
-  trading_volume: number;
-  coin_price: number;
-};

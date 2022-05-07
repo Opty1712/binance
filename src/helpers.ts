@@ -1,9 +1,12 @@
-import { Data } from './data';
-
-type Filter = {
-  text: string;
-  value: string;
-};
+import randomcolor from 'randomcolor';
+import {
+  ChartItem,
+  ChartKey,
+  Data,
+  DataByChartKey,
+  DataRecordByChartKey,
+  Filter
+} from './types';
 
 export const getCompanyFilters = (data: Data[]): Filter[] => {
   return data.map(({ company }) => ({
@@ -60,13 +63,83 @@ export const getDataSource = (data: Data[]) => {
   }));
 };
 
-export type SelectedCompanies = Array<Array<Data>>;
+export const chartKeys: ChartKey[] = [
+  'coin_price',
+  'trading_volume',
+  'web_visits'
+];
 
-export const getSelectedData = (data: Data[], selectedIds: string[]) => {
-  return selectedIds.reduce<SelectedCompanies>((accumulator, current) => {
-    const filteredCompany = data.filter((item) => item.id === current);
-    accumulator.push(filteredCompany);
+export const getDataByChartKey = (
+  data: Data[],
+  selectedIds: string[]
+): DataByChartKey => {
+  const dataByDate: DataRecordByChartKey = {
+    coin_price: {},
+    trading_volume: {},
+    web_visits: {}
+  };
 
-    return accumulator;
-  }, []);
+  data.forEach((item) => {
+    updateDataByChartKey(dataByDate, item, selectedIds);
+  });
+
+  const dataByChartKey = chartKeys.reduce<DataByChartKey>(
+    (accumulator, current) => {
+      const entries = Object.entries(dataByDate[current]);
+      accumulator[current] = entries.map(([dt, chartData]) => ({
+        name: dt,
+        ...chartData
+      }));
+
+      return accumulator;
+    },
+    {
+      coin_price: [],
+      trading_volume: [],
+      web_visits: []
+    }
+  );
+
+  return dataByChartKey;
+};
+
+const updateDataByChartKey = (
+  dataByDate: DataRecordByChartKey,
+  dataItem: Data,
+  selectedIds: string[]
+) => {
+  chartKeys.forEach((chartKey) => {
+    if (selectedIds.includes(dataItem.id)) {
+      dataByDate[chartKey][dataItem.dt] = {
+        ...dataByDate[chartKey][dataItem.dt],
+        [dataItem.company]: dataItem[chartKey]
+      };
+    }
+  });
+};
+
+export const getCompanyNames = (data: ChartItem[]) => {
+  const tempSet = new Set<string>();
+
+  data.forEach((item) => {
+    Object.keys(item).forEach((key) => tempSet.add(key));
+  });
+
+  return Array.from(tempSet).filter((item) => item !== 'name');
+};
+
+const companyColors: Record<string, string> = {};
+
+export const getCompanyColors = (data?: Data[]) => {
+  if (Object.keys(companyColors).length === 0) {
+    data?.forEach((item) => {
+      companyColors[item.company] = randomcolor();
+    }, {});
+  }
+
+  return companyColors;
+};
+
+export const sortDataByTime = (data: ChartItem[]) => {
+  data.sort((a, b) => Date.parse(a.name) - Date.parse(b.name));
 };

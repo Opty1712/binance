@@ -7,36 +7,23 @@ import {
   Typography
 } from 'antd';
 import 'antd/dist/antd.css';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer
-} from 'recharts';
 
-import { data, Data } from './data';
+import { data } from './data';
 import {
   getCompanyFilters,
   getCountryFilters,
   getDataSource,
-  getSelectedData,
-  SelectedCompanies
+  getDataByChartKey,
+  chartKeys,
+  getCompanyColors,
+  sortDataByTime
 } from './helpers';
+import { Chart } from './components';
+import { chartNames } from './constants';
+import { Data, DataByChartKey } from './types';
 
 export const App = memo(() => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
-  const [selectedCompanies, setSelectedCompanies] = useState<SelectedCompanies>(
-    []
-  );
-
-  useEffect(() => {
-    setSelectedCompanies(getSelectedData(data, selectedIds));
-  }, [selectedIds]);
 
   const rowSelection: TableProps<Data>['rowSelection'] = useMemo(
     () => ({
@@ -50,49 +37,41 @@ export const App = memo(() => {
 
   const dataSource = useMemo(() => getDataSource(data), []);
 
-  console.log(selectedCompanies);
+  const dataByChartKey: DataByChartKey = useMemo(
+    () => getDataByChartKey(data, selectedIds),
+    [selectedIds]
+  );
+
+  useEffect(() => {
+    getCompanyColors(data);
+  }, []);
 
   return (
     <>
       <PageHeader title="Companies comparision" />
-      <Typography.Text code>
-        Sort or filter companies from the table below and press «checkbox» at
-        the left for selecting companies to compare
+      <Typography.Text type="secondary">
+        Sort or filter companies from the table below and select particular
+        companies by pressing «checkbox» at the left of the row.
       </Typography.Text>
+
       <br />
       <br />
+
       <Table
         dataSource={dataSource}
         columns={columns}
         rowSelection={rowSelection}
       />
+
       <br />
       <br />
 
-      <LineChart
-        width={500}
-        height={300}
-        data={data2}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="pv"
-          stroke="#8884d8"
-          activeDot={{ r: 8 }}
-        />
-        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-      </LineChart>
+      {chartKeys.map((item) => {
+        const chartData = dataByChartKey[item];
+        sortDataByTime(chartData);
+
+        return <Chart key={item} chartKey={item} data={chartData} />;
+      })}
     </>
   );
 });
@@ -121,12 +100,9 @@ const renderFinance = (digits: number) => (
   </>
 );
 
-/**
- * Columns description + actions
- */
 const columns: TableColumnProps<Data>[] = [
   {
-    title: 'Company',
+    title: chartNames['company'],
     dataIndex: 'company',
     key: 'company',
     sorter: (a, b) => a.company.localeCompare(b.company),
@@ -138,7 +114,7 @@ const columns: TableColumnProps<Data>[] = [
       record.value.toLowerCase().indexOf(input.toLowerCase()) > -1
   },
   {
-    title: 'Country',
+    title: chartNames['country'],
     dataIndex: 'country',
     key: 'country',
     sorter: (a, b) => a.country.localeCompare(b.country),
@@ -146,7 +122,7 @@ const columns: TableColumnProps<Data>[] = [
     onFilter: (value, record) => record.country.indexOf(String(value)) === 0
   },
   {
-    title: 'Date of Last Data',
+    title: chartNames['dt'],
     dataIndex: 'dt',
     key: 'dt',
     sorter: (a, b) => Date.parse(a.dt) - Date.parse(b.dt),
@@ -154,7 +130,7 @@ const columns: TableColumnProps<Data>[] = [
     align: 'right'
   },
   {
-    title: 'Visits',
+    title: chartNames['web_visits'],
     dataIndex: 'web_visits',
     key: 'web_visits',
     sorter: (a, b) => a.web_visits - b.web_visits,
@@ -162,7 +138,7 @@ const columns: TableColumnProps<Data>[] = [
     align: 'right'
   },
   {
-    title: 'Trading Volume',
+    title: chartNames['trading_volume'],
     dataIndex: 'trading_volume',
     key: 'trading_volume',
     sorter: (a, b) => a.trading_volume - b.trading_volume,
@@ -170,56 +146,11 @@ const columns: TableColumnProps<Data>[] = [
     align: 'right'
   },
   {
-    title: 'Coin Price',
+    title: chartNames['coin_price'],
     dataIndex: 'coin_price',
     key: 'coin_price',
     sorter: (a, b) => a.coin_price - b.coin_price,
     render: renderFinance,
     align: 'right'
-  }
-];
-
-const data2 = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100
   }
 ];

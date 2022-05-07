@@ -1,6 +1,9 @@
 # Binance technical task.
 
-As it is Proof of Concept I made a fork from my own react-starter-kit
+As it is Proof of Concept I made a fork from my own react-starter-kit.
+I guess that `week` is an extra information as we have `dt`, so I decided to skip it.
+Also I think that `id` is the ID of the company, not ID of the current record.
+Not enough time to clarify these statements, so I developed app keeping that in mind.
 
 ## Run project:
 1. Install all dependencies with `yarn`
