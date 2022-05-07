@@ -140,6 +140,11 @@ export const getCompanyColors = (data?: Data[]) => {
   return companyColors;
 };
 
+type ChartItemWithName = { name: string };
 export const sortDataByTime = (data: ChartItem[]) => {
-  data.sort((a, b) => Date.parse(a.name) - Date.parse(b.name));
+  data.sort(
+    (a, b) =>
+      Date.parse((a as ChartItemWithName).name) -
+      Date.parse((b as ChartItemWithName).name)
+  );
 };

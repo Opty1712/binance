@@ -1,4 +1,4 @@
-import { Data } from './data';
+import { Data } from './types';
 
 export const chartNames: Record<keyof Data, string> = {
   coin_price: 'Coin Price',
