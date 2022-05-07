@@ -59,3 +59,14 @@ export const getDataSource = (data: Data[]) => {
     key: filteredDataByLastDate[item].id
   }));
 };
+
+export type SelectedCompanies = Array<Array<Data>>;
+
+export const getSelectedData = (data: Data[], selectedIds: string[]) => {
+  return selectedIds.reduce<SelectedCompanies>((accumulator, current) => {
+    const filteredCompany = data.filter((item) => item.id === current);
+    accumulator.push(filteredCompany);
+
+    return accumulator;
+  }, []);
+};

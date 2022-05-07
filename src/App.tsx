@@ -1,16 +1,36 @@
-import { memo, useMemo, useState } from 'react';
-import { Table, TableColumnProps, TableProps } from 'antd';
+import { memo, useEffect, useMemo, useState } from 'react';
+import {
+  Table,
+  TableColumnProps,
+  TableProps,
+  PageHeader,
+  Typography
+} from 'antd';
 import { data, Data } from './data';
 import 'antd/dist/antd.css';
-import { getCompanyFilters, getCountryFilters, getDataSource } from './helpers';
+import {
+  getCompanyFilters,
+  getCountryFilters,
+  getDataSource,
+  getSelectedData,
+  SelectedCompanies
+} from './helpers';
 
 export const App = memo(() => {
-  const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  const [selectedCompanies, setSelectedCompanies] = useState<SelectedCompanies>(
+    []
+  );
+
+  useEffect(() => {
+    setSelectedCompanies(getSelectedData(data, selectedIds));
+  }, [selectedIds]);
 
   const rowSelection: TableProps<Data>['rowSelection'] = useMemo(
     () => ({
       onChange: (selectedRowKeys: React.Key[]) => {
-        setSelectedCompanies(selectedRowKeys.map((item) => String(item)));
+        setSelectedIds(selectedRowKeys.map((item) => String(item)));
       },
       type: 'checkbox'
     }),
@@ -19,8 +39,17 @@ export const App = memo(() => {
 
   const dataSource = useMemo(() => getDataSource(data), []);
 
+  console.log(selectedCompanies);
+
   return (
     <>
+      <PageHeader title="Companies comparision" />
+      <Typography.Text code>
+        Sort or filter companies from the table below and press «checkbox» at
+        the left for selecting companies to compare
+      </Typography.Text>
+      <br />
+      <br />
       <Table
         dataSource={dataSource}
         columns={columns}
