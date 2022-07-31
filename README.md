@@ -1,9 +1,25 @@
 # Binance technical task.
 
-As it is Proof of Concept I made a fork from my own react-starter-kit.
-I guess that `week` is an extra information as we have `dt`, so I decided to skip it.
-Also I think that `id` is the ID of the company, not ID of the current record.
-Not enough time to clarify these statements, so I developed app keeping that in mind.
+Given that we have array of such items in JSON:
+```
+{
+    id: 'b321c425-c2c9-489b-9596-736bccc55e8e',
+    dt: '2022-02-26',
+    week: 9,
+    country: 'SG',
+    company: 'ToTheMoon',
+    web_visits: 4832,
+    trading_volume: 4961361,
+    coin_price: 718
+  }
+```
+create MVP to show how these data can be viewed and compared by several keys.
+
+## Solution
+
+Here is the deployed app:
+
+→→→→→→→→→→ 🔥 **<a href="https://binance-tech-task.vercel.app/" target="_blank">Demo</a>** 🔥 ←←←←←←←←←←
 
 ## Run project:
 1. Install all dependencies with `yarn`
